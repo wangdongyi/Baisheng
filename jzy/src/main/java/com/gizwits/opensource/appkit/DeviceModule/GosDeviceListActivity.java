@@ -41,6 +41,7 @@ import com.gizwits.opensource.appkit.CommonModule.TipsDialog;
 import com.gizwits.opensource.appkit.ConfigModule.GosAirlinkChooseDeviceWorkWiFiActivity;
 import com.gizwits.opensource.appkit.ConfigModule.GosCheckDeviceWorkWiFiActivity;
 import com.gizwits.opensource.appkit.ControlModule.GosDeviceControlActivity;
+import com.gizwits.opensource.appkit.ControlModule.PetControlActivity;
 import com.gizwits.opensource.appkit.PushModule.GosPushManager;
 import com.gizwits.opensource.appkit.R;
 import com.gizwits.opensource.appkit.SettingsModule.GosSettiingsActivity;
@@ -266,7 +267,8 @@ public class GosDeviceListActivity extends GosDeviceModuleBaseActivity implement
                     break;
 
                 case TOCONTROL:
-                    intent = new Intent(GosDeviceListActivity.this, GosDeviceControlActivity.class);
+//                    intent = new Intent(GosDeviceListActivity.this, GosDeviceControlActivity.class);
+                    intent = new Intent(GosDeviceListActivity.this, PetControlActivity.class);
                     Bundle bundle = new Bundle();
                     bundle.putParcelable("GizWifiDevice", (GizWifiDevice) msg.obj);
                     intent.putExtras(bundle);

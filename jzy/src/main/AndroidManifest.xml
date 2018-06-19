@@ -134,9 +134,13 @@
         <activity android:name=".SettingsModule.GosAboutActivity"></activity>
         <activity android:name=".ConfigModule.GosCheckDeviceWorkWiFiActivity"></activity>
         <activity
-            android:name=".ControlModule.GosDeviceControlActivity"
+        android:name=".ControlModule.GosDeviceControlActivity"
+        android:configChanges="orientation|keyboardHidden"
+        android:windowSoftInputMode="adjustUnspecified|stateHidden"></activity>
+        <activity
+            android:name=".ControlModule.PetControlActivity"
             android:configChanges="orientation|keyboardHidden"
-            android:windowSoftInputMode="adjustUnspecified|stateHidden"></activity>
+            android:windowSoftInputMode="adjustUnspecified|stateHidden"/>
         <activity android:name=".ConfigModule.GosModeListActivity"></activity>
         <activity android:name=".ConfigModule.GosAirlinkChooseDeviceWorkWiFiActivity"></activity>
         <activity android:name=".ConfigModule.GosAirlinkReadyActivity"></activity>
