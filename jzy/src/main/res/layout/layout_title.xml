@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/layout_title"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/top_color"
+    android:orientation="vertical">
+
+    <View
+        style="@style/titleStyles"
+        android:layout_width="wrap_content" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp">
+
+        <android.support.v7.widget.AppCompatImageView
+            android:id="@+id/imageView_back"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:background="@drawable/select_transparent"
+            android:contentDescription="@string/app_name"
+            android:scaleType="centerInside"
+            app:srcCompat="@drawable/ic_code" />
+
+        <TextView
+            android:id="@+id/textView_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:layout_toEndOf="@+id/imageView_back"
+            android:layout_toLeftOf="@+id/right_layout"
+            android:layout_toRightOf="@+id/imageView_back"
+            android:layout_toStartOf="@+id/right_layout"
+            android:gravity="center"
+            android:text=""
+            android:textColor="@color/white"
+            android:textSize="18.0dip"
+            android:textStyle="bold" />
+
+        <RelativeLayout
+            android:id="@+id/right_layout"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true">
+
+
+            <android.support.v7.widget.AppCompatImageView
+                android:id="@+id/imageView_add"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:background="@drawable/select_transparent"
+                android:contentDescription="@string/app_name"
+                android:scaleType="centerInside"
+                app:srcCompat="@drawable/ic_add_black" />
+
+            <TextView
+                android:id="@+id/textview_home"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:gravity="center"
+                android:text="首页"
+                android:textColor="@color/white"
+                android:textSize="14.0dp"
+                android:textStyle="bold"
+                android:visibility="gone" />
+        </RelativeLayout>
+    </RelativeLayout>
+</LinearLayout>
