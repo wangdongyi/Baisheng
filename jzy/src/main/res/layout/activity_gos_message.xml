@@ -97,11 +97,10 @@
             android:orientation="vertical">
 
 
-            <ImageView
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/recycler"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:scaleType="centerCrop"
-                android:src="@mipmap/xuanchuan" />
+                android:layout_height="wrap_content" />
 
             <LinearLayout
                 android:layout_width="match_parent"

@@ -175,7 +175,7 @@ public class GosDeviceListActivity extends GosDeviceModuleBaseActivity implement
     public static List<String> boundMessage;
 
     boolean isFrist = true;
-
+    private int showType = 0;
     // boolean isLogout = false;
     //
     // public static boolean isAnonymousLoging = false;
@@ -267,13 +267,21 @@ public class GosDeviceListActivity extends GosDeviceModuleBaseActivity implement
                     break;
 
                 case TOCONTROL:
-//                    intent = new Intent(GosDeviceListActivity.this, GosDeviceControlActivity.class);
-                    intent = new Intent(GosDeviceListActivity.this, PetControlActivity.class);
-                    Bundle bundle = new Bundle();
-                    bundle.putParcelable("GizWifiDevice", (GizWifiDevice) msg.obj);
-                    intent.putExtras(bundle);
-                    // startActivity(intent);
-                    startActivityForResult(intent, 1);
+                    if (showType == 1) {
+                        intent = new Intent(GosDeviceListActivity.this, GosDeviceControlActivity.class);
+                        Bundle bundle = new Bundle();
+                        bundle.putParcelable("GizWifiDevice", (GizWifiDevice) msg.obj);
+                        intent.putExtras(bundle);
+                        // startActivity(intent);
+                        startActivityForResult(intent, 1);
+                    } else if (showType == 2) {
+                        intent = new Intent(GosDeviceListActivity.this, PetControlActivity.class);
+                        Bundle bundle = new Bundle();
+                        bundle.putParcelable("GizWifiDevice", (GizWifiDevice) msg.obj);
+                        intent.putExtras(bundle);
+                        // startActivity(intent);
+                        startActivityForResult(intent, 1);
+                    }
                     break;
 
                 case TOAST:
@@ -485,7 +493,8 @@ public class GosDeviceListActivity extends GosDeviceModuleBaseActivity implement
                 //显示左边
                 list_layout.setVisibility(View.VISIBLE);
                 home_layout.setVisibility(View.GONE);
-                onShowListen.onShow(1);
+                showType = 1;
+                onShowListen.onShow(showType);
             }
         });
         right_image = (ImageView) findViewById(R.id.right_image);
@@ -495,7 +504,8 @@ public class GosDeviceListActivity extends GosDeviceModuleBaseActivity implement
                 //显示右边
                 list_layout.setVisibility(View.VISIBLE);
                 home_layout.setVisibility(View.GONE);
-                onShowListen.onShow(2);
+                showType = 2;
+                onShowListen.onShow(showType);
             }
         });
         list_layout = (LinearLayout) findViewById(R.id.list_layout);
@@ -504,7 +514,8 @@ public class GosDeviceListActivity extends GosDeviceModuleBaseActivity implement
     public void showHome() {
         list_layout.setVisibility(View.INVISIBLE);
         home_layout.setVisibility(View.VISIBLE);
-        onShowListen.onShow(0);
+        showType = 0;
+        onShowListen.onShow(showType);
     }
 
     private OnShowHomeListen onShowListen;

@@ -377,11 +377,13 @@ public class GosMainActivity extends GosDeviceModuleBaseActivity {
             case 1:
                 imageView_back.setVisibility(View.GONE);
                 right_layout.setVisibility(View.GONE);
+                layout_title.setBackgroundColor(ContextCompat.getColor(GosMainActivity.this, R.color.top_color));
                 textView_title.setText("产品展示");
                 break;
             case 2:
                 imageView_back.setVisibility(View.GONE);
                 right_layout.setVisibility(View.GONE);
+                layout_title.setBackgroundColor(ContextCompat.getColor(GosMainActivity.this, R.color.top_color));
                 textView_title.setText("我的");
                 break;
         }
