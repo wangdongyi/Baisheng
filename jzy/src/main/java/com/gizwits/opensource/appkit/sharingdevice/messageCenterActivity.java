@@ -195,7 +195,7 @@ public class messageCenterActivity extends GosBaseActivity {
         recyclerView.post(new Runnable() {
             @Override
             public void run() {
-                String url = "http://www.kongtiaoguanjia.com/machi/userController/select_all_img.do";
+                String url = "http://47.92.89.104:8080/machi/userController/select_all_img.do";
                 OkHttpClient okHttpClient = new OkHttpClient();
                 final Request request = new Request.Builder()
                         .url(url)
@@ -213,6 +213,7 @@ public class messageCenterActivity extends GosBaseActivity {
                         String data = response.body().string();
                         //http://www.kongtiaoguanjia.com/
                         try {
+                            list.clear();
                             JSONArray jsonObject = new JSONArray(data);
                             for (int i = 0; i < jsonObject.length(); i++) {
                                 JSONObject job = jsonObject.getJSONObject(i);

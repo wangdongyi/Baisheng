@@ -53,7 +53,7 @@ public class MessageAdapter extends RecyclerView.Adapter {
         final ViewHolder viewHolder = (ViewHolder) holder;
         final String mac = list.get(position);
         Glide.with(viewHolder.zmt_item_imageView).
-                load("http://www.kongtiaoguanjia.com/" + mac).apply(options).
+                load("http://47.92.89.104:8080/" + mac).apply(options).
                 into(new SimpleTarget<Drawable>() {
                     @Override
                     public void onResourceReady(Drawable resource, Transition<? super Drawable> transition) {
