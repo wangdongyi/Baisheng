@@ -10,8 +10,9 @@
     <ImageView
         android:id="@+id/imageView"
         android:layout_width="wrap_content"
-        android:layout_height="300dp"
+        android:layout_height="150dp"
         android:layout_centerHorizontal="true"
+        android:layout_marginTop="100dp"
         android:src="@mipmap/sheshidu" />
 
     <TextView
@@ -20,10 +21,12 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/imageView"
         android:layout_centerHorizontal="true"
+        android:layout_marginTop="50dp"
         android:gravity="center"
-        android:text="佰盛在你身边"
+        android:text="佰盛智能在你身边"
         android:textColor="@color/text_black"
-        android:textSize="33.0dp" />
+        android:textSize="28.0dp"
+        android:textStyle="normal" />
 
     <RelativeLayout
         android:id="@+id/layout_small"
@@ -37,23 +40,32 @@
         android:layout_marginTop="10dp"
         android:orientation="horizontal">
 
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"
+            android:layout_centerVertical="true"
+            android:layout_marginTop="2dp"
+            android:layout_toLeftOf="@+id/textView_small"
+            android:layout_toStartOf="@+id/textView_small"
+            android:background="@color/black" />
+
         <TextView
             android:id="@+id/textView_small"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="新的选择"
+            android:layout_centerInParent="true"
+            android:text="◆     新的选择 新的启程     ◆"
             android:textColor="@color/text_black"
-            android:textSize="21.0dp" />
+            android:textSize="12.0dp" />
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentEnd="true"
-            android:layout_alignParentRight="true"
-            android:gravity="center"
-            android:text="新的启程"
-            android:textColor="@color/text_black"
-            android:textSize="21.0dp" />
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"
+            android:layout_centerVertical="true"
+            android:layout_marginTop="3dp"
+            android:layout_toEndOf="@+id/textView_small"
+            android:layout_toRightOf="@+id/textView_small"
+            android:background="@color/black" />
     </RelativeLayout>
 
 
@@ -62,14 +74,14 @@
         android:layout_height="50dp"
         android:layout_alignEnd="@+id/layout_small"
         android:layout_alignLeft="@+id/layout_small"
+        android:layout_alignParentBottom="true"
         android:layout_alignRight="@+id/layout_small"
         android:layout_alignStart="@+id/layout_small"
-        android:layout_below="@+id/layout_small"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="30dp"
+        android:layout_marginBottom="30dp"
         android:background="@drawable/round_bit_grey"
         android:gravity="center"
         android:text="马上开启"
         android:textColor="@color/text_black"
-        android:textSize="21.0dp" />
+        android:textSize="15.0dp" />
 </RelativeLayout>
