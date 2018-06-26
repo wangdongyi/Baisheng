@@ -1,5 +1,6 @@
 package com.gizwits.opensource.appkit.ControlModule;
 
+import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -443,6 +444,7 @@ public class GosControlModuleBaseActivity extends GosBaseActivity {
         return super.onOptionsItemSelected(item);
     }
 
+    @SuppressLint("ShowToast")
     public void myToast(String string) {
         if (mToast != null) {
             mToast.setText(string);
