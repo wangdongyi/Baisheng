@@ -20,4 +20,13 @@
         <item>自动</item>
         <item>定时</item>
     </string-array>
+    <string-array name="week">
+        <item>星期日</item>
+        <item>星期六</item>
+        <item>星期五</item>
+        <item>星期四</item>
+        <item>星期三</item>
+        <item>星期二</item>
+        <item>星期一</item>
+    </string-array>
 </resources>

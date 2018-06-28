@@ -56,6 +56,7 @@ import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -240,7 +241,19 @@ public class GosDeviceListActivity extends GosDeviceModuleBaseActivity implement
                 case GETLIST:
 
                     if (!uid.isEmpty() && !token.isEmpty()) {
-                        GizWifiSDK.sharedInstance().getBoundDevices(uid, token, ProductKeyList);
+                        switch (showType) {
+                            case 1:
+                                List<String> wen=new ArrayList<>();
+                                wen.add(ProductKeyList.get(0));
+                                GizWifiSDK.sharedInstance().getBoundDevices(uid, token, wen);
+                                break;
+                            case 2:
+                                List<String> chong=new ArrayList<>();
+                                chong.add(ProductKeyList.get(1));
+                                GizWifiSDK.sharedInstance().getBoundDevices(uid, token, chong);
+                                break;
+                        }
+
                     }
 
                     if (loginStatus == 0 && GosDeploy.setAnonymousLogin()) {
@@ -495,6 +508,7 @@ public class GosDeviceListActivity extends GosDeviceModuleBaseActivity implement
                 home_layout.setVisibility(View.GONE);
                 showType = 1;
                 onShowListen.onShow(showType);
+                handler.sendEmptyMessageDelayed(PULL_TO_REFRESH, toastTime);
             }
         });
         right_image = (ImageView) findViewById(R.id.right_image);
@@ -506,6 +520,7 @@ public class GosDeviceListActivity extends GosDeviceModuleBaseActivity implement
                 home_layout.setVisibility(View.GONE);
                 showType = 2;
                 onShowListen.onShow(showType);
+                handler.sendEmptyMessageDelayed(PULL_TO_REFRESH, toastTime);
             }
         });
         list_layout = (LinearLayout) findViewById(R.id.list_layout);

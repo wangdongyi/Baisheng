@@ -458,7 +458,7 @@ public class ProtractorView extends View {
     }
 
     public int getAngle() {
-        return mAngle;
+        return (180 - mAngle ) /3> 0 ? (180 - mAngle ) /3 : 0;
     }
 
     public void setAngle(int angle) {

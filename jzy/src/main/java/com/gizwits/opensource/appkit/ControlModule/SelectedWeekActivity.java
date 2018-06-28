@@ -11,6 +11,9 @@ import android.widget.TextView;
 
 import com.gizwits.opensource.appkit.R;
 
+import org.greenrobot.eventbus.EventBus;
+
+import wdy.business.event.MessageEvent;
 import wdy.business.listen.NoDoubleClickListener;
 import wdy.business.util.StatusBarUtil;
 
@@ -44,7 +47,7 @@ public class SelectedWeekActivity extends FragmentActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_selected_week);
-        StatusBarUtil.setStatusBarDark(getWindow(),false);
+        StatusBarUtil.setStatusBarDark(getWindow(), false);
         initView();
         setTitle();
         initClick();
@@ -87,6 +90,7 @@ public class SelectedWeekActivity extends FragmentActivity {
                     selected1 = true;
                     imageView_1.setVisibility(View.VISIBLE);
                 }
+                EventBus.getDefault().post(new MessageEvent("刷新复用", getWeek()));
             }
         });
         layout_2.setOnClickListener(new View.OnClickListener() {
@@ -99,6 +103,7 @@ public class SelectedWeekActivity extends FragmentActivity {
                     selected2 = true;
                     imageView_2.setVisibility(View.VISIBLE);
                 }
+                EventBus.getDefault().post(new MessageEvent("刷新复用", getWeek()));
             }
         });
         layout_3.setOnClickListener(new View.OnClickListener() {
@@ -111,6 +116,7 @@ public class SelectedWeekActivity extends FragmentActivity {
                     selected3 = true;
                     imageView_3.setVisibility(View.VISIBLE);
                 }
+                EventBus.getDefault().post(new MessageEvent("刷新复用", getWeek()));
             }
         });
         layout_4.setOnClickListener(new View.OnClickListener() {
@@ -123,6 +129,7 @@ public class SelectedWeekActivity extends FragmentActivity {
                     selected4 = true;
                     imageView_4.setVisibility(View.VISIBLE);
                 }
+                EventBus.getDefault().post(new MessageEvent("刷新复用", getWeek()));
             }
         });
         layout_5.setOnClickListener(new View.OnClickListener() {
@@ -135,6 +142,7 @@ public class SelectedWeekActivity extends FragmentActivity {
                     selected5 = true;
                     imageView_5.setVisibility(View.VISIBLE);
                 }
+                EventBus.getDefault().post(new MessageEvent("刷新复用", getWeek()));
             }
         });
         layout_6.setOnClickListener(new View.OnClickListener() {
@@ -147,6 +155,7 @@ public class SelectedWeekActivity extends FragmentActivity {
                     selected6 = true;
                     imageView_6.setVisibility(View.VISIBLE);
                 }
+                EventBus.getDefault().post(new MessageEvent("刷新复用", getWeek()));
             }
         });
         layout_7.setOnClickListener(new View.OnClickListener() {
@@ -159,6 +168,7 @@ public class SelectedWeekActivity extends FragmentActivity {
                     selected7 = true;
                     imageView_7.setVisibility(View.VISIBLE);
                 }
+                EventBus.getDefault().post(new MessageEvent("刷新复用", getWeek()));
             }
         });
     }
@@ -210,6 +220,33 @@ public class SelectedWeekActivity extends FragmentActivity {
         selected5 = false;
         selected6 = false;
         selected7 = false;
-
+    }
+    private int getWeek() {
+        long week = 0;
+        if (selected1) {
+            week = week + 1;
+        }
+        if (selected2) {
+            week = week + 10;
+        }
+        if (selected3) {
+            week = week + 100;
+        }
+        if (selected4) {
+            week = week + 1000;
+        }
+        if (selected5) {
+            week = week + 10000;
+        }
+        if (selected6) {
+            week = week + 100000;
+        }
+        if (selected7) {
+            week = week + 1000000;
+        }
+        int back = 0;
+        String binaryString = week + "";
+        back = Integer.parseInt(binaryString, 2);
+        return back;
     }
 }

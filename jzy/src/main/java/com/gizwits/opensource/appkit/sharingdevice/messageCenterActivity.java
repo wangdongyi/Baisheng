@@ -195,7 +195,7 @@ public class messageCenterActivity extends GosBaseActivity {
         recyclerView.post(new Runnable() {
             @Override
             public void run() {
-                String url = "http://47.92.89.104:8080/machi/userController/select_all_img.do";
+                String url = "http://47.92.89.104:8080/sybsdq/userController/select_all_img.do";
                 OkHttpClient okHttpClient = new OkHttpClient();
                 final Request request = new Request.Builder()
                         .url(url)
