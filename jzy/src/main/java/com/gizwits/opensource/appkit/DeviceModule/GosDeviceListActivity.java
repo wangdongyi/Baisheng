@@ -239,16 +239,15 @@ public class GosDeviceListActivity extends GosDeviceModuleBaseActivity implement
             super.handleMessage(msg);
             switch (msg.what) {
                 case GETLIST:
-
                     if (!uid.isEmpty() && !token.isEmpty()) {
                         switch (showType) {
                             case 1:
-                                List<String> wen=new ArrayList<>();
+                                List<String> wen = new ArrayList<>();
                                 wen.add(ProductKeyList.get(0));
                                 GizWifiSDK.sharedInstance().getBoundDevices(uid, token, wen);
                                 break;
                             case 2:
-                                List<String> chong=new ArrayList<>();
+                                List<String> chong = new ArrayList<>();
                                 chong.add(ProductKeyList.get(1));
                                 GizWifiSDK.sharedInstance().getBoundDevices(uid, token, chong);
                                 break;
@@ -508,7 +507,8 @@ public class GosDeviceListActivity extends GosDeviceModuleBaseActivity implement
                 home_layout.setVisibility(View.GONE);
                 showType = 1;
                 onShowListen.onShow(showType);
-                handler.sendEmptyMessageDelayed(PULL_TO_REFRESH, toastTime);
+                progressDialog.show();
+                handler.sendEmptyMessageDelayed(PULL_TO_REFRESH, 10);
             }
         });
         right_image = (ImageView) findViewById(R.id.right_image);
@@ -520,7 +520,8 @@ public class GosDeviceListActivity extends GosDeviceModuleBaseActivity implement
                 home_layout.setVisibility(View.GONE);
                 showType = 2;
                 onShowListen.onShow(showType);
-                handler.sendEmptyMessageDelayed(PULL_TO_REFRESH, toastTime);
+                progressDialog.show();
+                handler.sendEmptyMessageDelayed(PULL_TO_REFRESH, 10);
             }
         });
         list_layout = (LinearLayout) findViewById(R.id.list_layout);
@@ -773,6 +774,7 @@ public class GosDeviceListActivity extends GosDeviceModuleBaseActivity implement
     }
 
     private void UpdateUI() {
+        progressDialog.cancel();
         if (GosDeviceModuleBaseActivity.deviceslist.isEmpty()) {
             svListGroup.setVisibility(View.GONE);
             llNoDevice.setVisibility(View.VISIBLE);
