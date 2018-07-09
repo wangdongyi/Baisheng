@@ -254,7 +254,6 @@ public class GosDeviceListActivity extends GosDeviceModuleBaseActivity implement
                         }
 
                     }
-
                     if (loginStatus == 0 && GosDeploy.setAnonymousLogin()) {
                         loginStatus = 3;
                         GizWifiSDK.sharedInstance().userLoginAnonymous();
