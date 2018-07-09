@@ -76,8 +76,9 @@
                     android:scaleX="0.5"
                     android:scaleY="0.5"
                     android:textColor="@color/top_color"
-                    android:textOff="关"
-                    android:textOn="开"
+                    android:typeface="normal"
+                    android:textOff=""
+                    android:textOn=""
                     android:thumb="@drawable/my_thumb"
                     android:track="@drawable/switch_setting_selector" />
             </RelativeLayout>

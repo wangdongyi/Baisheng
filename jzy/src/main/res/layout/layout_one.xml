@@ -23,8 +23,11 @@
             android:checked="true"
             android:scaleX="0.5"
             android:scaleY="0.5"
+            android:textOff=""
+            android:textOn=""
             android:thumb="@drawable/my_thumb"
-            android:track="@drawable/switch_setting_selector" />
+            android:track="@drawable/switch_setting_selector"
+            android:typeface="normal" />
 
         <TextView
             android:id="@+id/temp_textView"
