@@ -3,6 +3,7 @@ package com.gizwits.opensource.appkit.ControlModule;
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.app.TimePickerDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
@@ -12,24 +13,25 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CompoundButton;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.RadioGroup;
 import android.widget.RelativeLayout;
 import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
 import com.gizwits.gizwifisdk.api.GizWifiDevice;
 import com.gizwits.gizwifisdk.enumration.GizWifiDeviceNetStatus;
 import com.gizwits.gizwifisdk.enumration.GizWifiErrorCode;
+import com.gizwits.opensource.appkit.CommonModule.MyGizWifiDevice;
 import com.gizwits.opensource.appkit.R;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
-import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -39,13 +41,6 @@ import wdy.business.util.StatusBarUtil;
 import wdy.business.view.ProtractorView;
 
 import static com.gizwits.opensource.appkit.ControlModule.SelectedWeekActivity.clean;
-import static com.gizwits.opensource.appkit.ControlModule.SelectedWeekActivity.selected1;
-import static com.gizwits.opensource.appkit.ControlModule.SelectedWeekActivity.selected2;
-import static com.gizwits.opensource.appkit.ControlModule.SelectedWeekActivity.selected3;
-import static com.gizwits.opensource.appkit.ControlModule.SelectedWeekActivity.selected4;
-import static com.gizwits.opensource.appkit.ControlModule.SelectedWeekActivity.selected5;
-import static com.gizwits.opensource.appkit.ControlModule.SelectedWeekActivity.selected6;
-import static com.gizwits.opensource.appkit.ControlModule.SelectedWeekActivity.selected7;
 
 /**
  * 作者：王东一
@@ -72,6 +67,7 @@ public class PetControlActivity extends PetControlModuleBaseActivity implements 
     private Calendar mCalendar;
     private boolean userDone = false;
     private GizWifiDevice mDevice;//设备
+    private ImageView waringImage;
 
     private enum handler_key {
         //更新界面
@@ -97,7 +93,7 @@ public class PetControlActivity extends PetControlModuleBaseActivity implements 
     Handler mHandler = new Handler() {
         public void handleMessage(Message msg) {
             super.handleMessage(msg);
-            PetControlActivity.handler_key key = PetControlActivity.handler_key.values()[msg.what];
+            handler_key key = handler_key.values()[msg.what];
             switch (key) {
                 case UPDATE_UI:
                     if (!isEdit)
@@ -144,6 +140,7 @@ public class PetControlActivity extends PetControlModuleBaseActivity implements 
         repeat_layout = (RelativeLayout) findViewById(R.id.repeat_layout);
         layout_automatic = (LinearLayout) findViewById(R.id.layout_automatic);
         button = (Button) findViewById(R.id.button);
+        waringImage = (ImageView) findViewById(R.id.waringImage);
     }
 
     private void initClick() {
@@ -152,10 +149,32 @@ public class PetControlActivity extends PetControlModuleBaseActivity implements 
             @Override
             public void onClick(View v) {
                 if (isEdit) {//是否可以编辑
-                    imageView_right.setImageResource(R.mipmap.close);
-                    isEdit = false;
-                    edit_view.setVisibility(View.VISIBLE);
-                    button.setVisibility(View.GONE);
+                    if (userDone) {
+                        showAlertDialog("您有修改没有提交，是否提交？", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                dialog.dismiss();
+                                userDone = false;
+                                sendCommand();
+                            }
+                        }, new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                dialog.dismiss();
+                                isEdit = false;
+                                imageView_right.setImageResource(R.mipmap.close);
+                                isEdit = false;
+                                edit_view.setVisibility(View.VISIBLE);
+                                button.setVisibility(View.GONE);
+                                getStatusOfDevice();
+                            }
+                        });
+                    } else {
+                        imageView_right.setImageResource(R.mipmap.close);
+                        isEdit = false;
+                        edit_view.setVisibility(View.VISIBLE);
+                        button.setVisibility(View.GONE);
+                    }
                 } else {
                     imageView_right.setImageResource(R.mipmap.open);
                     isEdit = true;
@@ -182,6 +201,9 @@ public class PetControlActivity extends PetControlModuleBaseActivity implements 
             @Override
             public void onProgressChanged(ProtractorView protractorView, int progress, boolean fromUser) {
                 text_show.setText(String.valueOf(progress));
+                if (isEdit) {
+                    userDone = true;
+                }
             }
 
             @Override
@@ -237,7 +259,8 @@ public class PetControlActivity extends PetControlModuleBaseActivity implements 
             protected void onNoDoubleClick(View v) {
                 if (switch_all.isChecked()) {
                     userDone = true;
-                    Intent intent = new Intent(PetControlActivity.this, SelectedWeekActivity.class);
+                    Intent intent = new Intent(PetControlActivity.this, SelectedPetActivity.class);
+                    intent.putExtra("week", automaticBean.getWeek());
                     startActivity(intent);
                 } else {
                     myToast("设备关机中不能修改");
@@ -247,19 +270,27 @@ public class PetControlActivity extends PetControlModuleBaseActivity implements 
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                progressDialog.show();
-                int sn = 5;
-                ConcurrentHashMap<String, Object> hashMap = new ConcurrentHashMap<String, Object>();
-                hashMap.put(KEY_DATA14, switch_all.isChecked());
-                hashMap.put("Set_Temp", protractor.getAngle());
-                hashMap.put(KEY_DATA6, automaticBean.getStarHour());
-                hashMap.put(KEY_DATA7, automaticBean.getStarMinute());
-                hashMap.put(KEY_DATA8, automaticBean.getEndHour());
-                hashMap.put(KEY_DATA9, automaticBean.getEndMinute());
-                hashMap.put(KEY_DATA12, automaticBean.getWeek());
-                mDevice.write(hashMap, sn);
+                sendCommand();
             }
         });
+    }
+
+    private void sendCommand() {
+        if(automaticBean.getWeek()<1){
+            myToast("重复选项不能为空");
+            return;
+        }
+        progressDialog.show();
+        int sn = 5;
+        ConcurrentHashMap<String, Object> hashMap = new ConcurrentHashMap<String, Object>();
+        hashMap.put(KEY_DATA14, switch_all.isChecked());
+        hashMap.put("Set_Temp", protractor.getAngle());
+        hashMap.put(KEY_DATA6, automaticBean.getStarHour());
+        hashMap.put(KEY_DATA7, automaticBean.getStarMinute());
+        hashMap.put(KEY_DATA8, automaticBean.getEndHour());
+        hashMap.put(KEY_DATA9, automaticBean.getEndMinute());
+        hashMap.put(KEY_DATA12, automaticBean.getWeek());
+        mDevice.write(hashMap, sn);
     }
 
     private void TimeShow(int hour, int minute, TimePickerDialog.OnTimeSetListener listener) {
@@ -310,16 +341,38 @@ public class PetControlActivity extends PetControlModuleBaseActivity implements 
         textView_end_time.setText((automaticBean.getEndHour() < 10 ? "0" + automaticBean.getEndHour() : automaticBean.getEndHour()) +
                 ":" + (automaticBean.getEndMinute() < 10 ? "0" + automaticBean.getEndMinute() : automaticBean.getEndMinute()));
         textView_repeat.setText(getWeek(automaticBean.getWeek()));
+        setWaringImage();
+
+    }
+    private void setWaringImage(){
+        switch (Waring) {
+            case 0:
+                waringImage.setVisibility(View.GONE);
+                break;
+            default:
+                waringImage.setVisibility(View.VISIBLE);
+                Glide.with(this).load(R.drawable.waring).into(waringImage);
+                break;
+        }
+        waringImage.post(new Runnable() {
+            @Override
+            public void run() {
+                MyGizWifiDevice myGizWifiDevice = new MyGizWifiDevice();
+                myGizWifiDevice.setWaring(Waring);
+                myGizWifiDevice.setOpen(switch1Selected);
+                myGizWifiDevice.setGizWifiDevice(mDevice);
+                EventBus.getDefault().post(new MessageEvent("刷新", myGizWifiDevice));
+            }
+        });
     }
 
     private String getWeek(int week) {
         String value = Integer.toBinaryString(week);
-        int length = 7 - value.length();
-        String[] weekBuffer = getResources().getStringArray(R.array.week);
+        int length = 8 - value.length();
+        String[] weekBuffer = getResources().getStringArray(R.array.weekOnce);
         for (int i = 0; i < length; i++) {
             value = "0" + value;
         }
-        changeWeek(value);
         StringBuilder weekSelected = new StringBuilder();
         for (int i = 0; i < value.length(); i++) {
             if (String.valueOf(value.charAt(i)).endsWith("1")) {
@@ -364,34 +417,6 @@ public class PetControlActivity extends PetControlModuleBaseActivity implements 
         finish();
     }
 
-    private void changeWeek(String value) {
-        for (int i = 0; i < value.length(); i++) {
-            switch (i) {
-                case 0:
-                    selected7 = String.valueOf(value.charAt(i)).endsWith("1");
-                    break;
-                case 1:
-                    selected6 = String.valueOf(value.charAt(i)).endsWith("1");
-                    break;
-                case 2:
-                    selected5 = String.valueOf(value.charAt(i)).endsWith("1");
-                    break;
-                case 3:
-                    selected4 = String.valueOf(value.charAt(i)).endsWith("1");
-                    break;
-                case 4:
-                    selected3 = String.valueOf(value.charAt(i)).endsWith("1");
-                    break;
-                case 5:
-                    selected2 = String.valueOf(value.charAt(i)).endsWith("1");
-                    break;
-                case 6:
-                    selected1 = String.valueOf(value.charAt(i)).endsWith("1");
-                    break;
-
-            }
-        }
-    }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onMoonEvent(MessageEvent messageEvent) {
@@ -458,7 +483,7 @@ public class PetControlActivity extends PetControlModuleBaseActivity implements 
             mHandler.removeCallbacks(mRunnable);
             progressDialog.cancel();
         } else {
-            mHandler.sendEmptyMessage(PetControlActivity.handler_key.DISCONNECT.ordinal());
+            mHandler.sendEmptyMessage(handler_key.DISCONNECT.ordinal());
         }
     }
 
@@ -472,10 +497,10 @@ public class PetControlActivity extends PetControlModuleBaseActivity implements 
         if (result == GizWifiErrorCode.GIZ_SDK_SUCCESS) {
             if (dataMap.get("data") != null) {
                 getDataFromReceiveDataMap(dataMap);
-                mHandler.sendEmptyMessage(PetControlActivity.handler_key.UPDATE_UI.ordinal());
+                mHandler.sendEmptyMessage(handler_key.UPDATE_UI.ordinal());
             } else {
                 myToast("提交成功");
-                mHandler.sendEmptyMessage(PetControlActivity.handler_key.UPDATE.ordinal());
+                mHandler.sendEmptyMessage(handler_key.UPDATE.ordinal());
                 imageView_right.setImageResource(R.mipmap.close);
                 isEdit = false;
                 edit_view.setVisibility(View.VISIBLE);

@@ -76,11 +76,22 @@
                     android:scaleX="0.5"
                     android:scaleY="0.5"
                     android:textColor="@color/top_color"
-                    android:typeface="normal"
                     android:textOff=""
                     android:textOn=""
                     android:thumb="@drawable/my_thumb"
-                    android:track="@drawable/switch_setting_selector" />
+                    android:track="@drawable/switch_setting_selector"
+                    android:typeface="normal" />
+
+                <ImageView
+                    android:id="@+id/waringImage"
+                    android:layout_width="35dp"
+                    android:layout_height="35dp"
+                    android:layout_alignParentEnd="true"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginEnd="15dp"
+                    android:layout_marginRight="15dp"
+                    android:layout_marginTop="30dp"
+                    android:visibility="gone" />
             </RelativeLayout>
 
             <LinearLayout

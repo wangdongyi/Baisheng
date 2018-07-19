@@ -140,6 +140,10 @@
             android:name=".ControlModule.PetControlActivity"
             android:configChanges="orientation|keyboardHidden"
             android:windowSoftInputMode="adjustUnspecified|stateHidden"/>
+        <activity
+            android:name=".ControlModule.SelectedPetActivity"
+            android:configChanges="orientation|keyboardHidden"
+            android:windowSoftInputMode="adjustUnspecified|stateHidden"/>
         <activity android:name=".ConfigModule.GosModeListActivity"></activity>
         <activity android:name=".ConfigModule.GosAirlinkChooseDeviceWorkWiFiActivity"></activity>
         <activity android:name=".ConfigModule.GosAirlinkReadyActivity"></activity>
