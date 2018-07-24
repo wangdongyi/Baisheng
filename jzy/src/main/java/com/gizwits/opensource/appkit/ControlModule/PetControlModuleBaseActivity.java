@@ -107,7 +107,8 @@ public class PetControlModuleBaseActivity extends GosBaseActivity {
     protected ArrayList<Integer> temperatureArrayList = new ArrayList<>();
     protected int type = 0;
     private Toast mToast;
-    protected AutomaticBean automaticBean;
+    protected AutomaticBean automaticBean = new AutomaticBean();
+    ;
 
     @SuppressWarnings("unchecked")
     protected void getDataFromReceiveDataMap(ConcurrentHashMap<String, Object> dataMap) {
@@ -124,9 +125,12 @@ public class PetControlModuleBaseActivity extends GosBaseActivity {
                         }
                         break;
                     case "Set_Temp":
-                        Set_Temp= (int) map.get("Set_Temp");
+                        Set_Temp = (int) map.get("Set_Temp");
                         if (Set_Temp > 60) {
                             Set_Temp = 60;
+                        }
+                        if (Set_Temp < 0) {
+                            Set_Temp = 0;
                         }
                         break;
                     case KEY_DATA6:
@@ -211,7 +215,6 @@ public class PetControlModuleBaseActivity extends GosBaseActivity {
         manualBean.setKillSwitch(switch8Selected);
         baseBean.setManualBean(manualBean);
 
-        automaticBean = new AutomaticBean();
         automaticBean.setStarHour(StartTimeHour);
         automaticBean.setStarMinute(StartTimeMin);
         automaticBean.setEndHour(CloseTimeHour);
