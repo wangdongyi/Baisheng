@@ -195,7 +195,8 @@ public class PetControlActivity extends PetControlModuleBaseActivity implements 
                 myToast("想修改请先点右上角解锁");
             }
         });
-        textView_title.setText("宠物之家7-23 09：55");
+        textView_title.setText("宠物之家");
+        protractor.setAngle(0);
         text_show.setText(String.valueOf(protractor.getAngle()));
         protractor.setOnProtractorViewChangeListener(new ProtractorView.OnProtractorViewChangeListener() {
             @Override
