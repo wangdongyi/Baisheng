@@ -195,7 +195,7 @@ public class PetControlActivity extends PetControlModuleBaseActivity implements 
                 myToast("想修改请先点右上角解锁");
             }
         });
-        textView_title.setText("宠物之家");
+        textView_title.setText("宠物之家7-23 09：55");
         text_show.setText(String.valueOf(protractor.getAngle()));
         protractor.setOnProtractorViewChangeListener(new ProtractorView.OnProtractorViewChangeListener() {
             @Override
@@ -231,7 +231,12 @@ public class PetControlActivity extends PetControlModuleBaseActivity implements 
                         }
                     });
                 } else {
-                    myToast("设备关机中不能修改");
+                    repeat_layout.postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            myToast("设备关机中不能修改");
+                        }
+                    },100);
                 }
             }
         });
@@ -250,7 +255,12 @@ public class PetControlActivity extends PetControlModuleBaseActivity implements 
                         }
                     });
                 } else {
-                    myToast("设备关机中不能修改");
+                    repeat_layout.postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            myToast("设备关机中不能修改");
+                        }
+                    },100);
                 }
             }
         });
@@ -263,7 +273,13 @@ public class PetControlActivity extends PetControlModuleBaseActivity implements 
                     intent.putExtra("week", automaticBean.getWeek());
                     startActivity(intent);
                 } else {
-                    myToast("设备关机中不能修改");
+                    repeat_layout.postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            myToast("设备关机中不能修改");
+                        }
+                    },100);
+
                 }
             }
         });
@@ -276,10 +292,6 @@ public class PetControlActivity extends PetControlModuleBaseActivity implements 
     }
 
     private void sendCommand() {
-        if(automaticBean.getWeek()<1){
-            myToast("重复选项不能为空");
-            return;
-        }
         progressDialog.show();
         int sn = 5;
         ConcurrentHashMap<String, Object> hashMap = new ConcurrentHashMap<String, Object>();
@@ -318,9 +330,9 @@ public class PetControlActivity extends PetControlModuleBaseActivity implements 
 
     private void changeDevice(boolean change) {
         protractor.setEnabled(change);
-        start_time_layout.setClickable(change);
-        end_time_layout.setClickable(change);
-        repeat_layout.setClickable(change);
+//        start_time_layout.setClickable(change);
+//        end_time_layout.setClickable(change);
+//        repeat_layout.setClickable(change);
     }
 
     @Override

@@ -332,7 +332,7 @@ public class PetControlModuleBaseActivity extends GosBaseActivity {
         if (mToast != null) {
             mToast.setText(string);
         } else {
-            mToast = Toast.makeText(getApplicationContext(), string, Toast.LENGTH_LONG);
+            mToast = Toast.makeText(this, string, Toast.LENGTH_LONG);
         }
         mToast.show();
     }

@@ -29,6 +29,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="350dp"
                     app:textProgressColor="#ffffff"
+                    app:angle="0"
                     app:tickProgressColor="#ffffff" />
 
                 <TextView

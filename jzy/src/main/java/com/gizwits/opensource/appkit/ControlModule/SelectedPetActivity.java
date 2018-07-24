@@ -85,18 +85,25 @@ public class SelectedPetActivity extends FragmentActivity {
     }
 
     private void getWeek(int week) {
-        StringBuilder value = new StringBuilder(Integer.toBinaryString(week));
-        int length = 8 - value.length();
-        for (int i = 0; i < length; i++) {
-            value.insert(0, "0");
-        }
-        for (int i = 0; i < value.length(); i++) {
-            if (String.valueOf(value.charAt( value.length()-1-i)).endsWith("1")) {
-                booleanList.add(true);
-            }else {
+        if (week <= 0) {
+            for (int i = 0; i < 8; i++) {
                 booleanList.add(false);
             }
+        } else {
+            StringBuilder value = new StringBuilder(Integer.toBinaryString(week));
+            int length = 8 - value.length();
+            for (int i = 0; i < length; i++) {
+                value.insert(0, "0");
+            }
+            for (int i = 0; i < value.length(); i++) {
+                if (String.valueOf(value.charAt(value.length() - 1 - i)).endsWith("1")) {
+                    booleanList.add(true);
+                } else {
+                    booleanList.add(false);
+                }
+            }
         }
+
 
     }
 
